@@ -1,0 +1,5 @@
+com\example\demo\Services\Impl\IUserService.class
+com\example\demo\Demo1Application.class
+com\example\demo\exception\FileUploadExceptionAdvice.class
+com\example\demo\Services\FilesStorageService.class
+com\example\demo\Services\FilesStorageServiceImpl.class
