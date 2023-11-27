@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
-
 @Controller
 public class UserController {
 
@@ -21,33 +20,32 @@ public class UserController {
     private UserService service;
 
     @Autowired
-	private SecurityConfiguration bCryptPasswordEncoder;
+    private SecurityConfiguration bCryptPasswordEncoder;
     @Autowired
     private UserRepository repo;
+
     @RequestMapping("/")
-    public String viewHomePage(){
+    public String viewHomePage() {
         return "index";
     }
 
     @RequestMapping("/login_page")
-    public String viewLoginPage(){
+    public String viewLoginPage() {
         return "login";
     }
 
-
     @RequestMapping("/reset_password")
-    public String viewResetPassworddPage(){
+    public String viewResetPassworddPage() {
         return "reset_password";
     }
 
     @RequestMapping("/contactus_page")
-    public String viewContactUsPage(){
+    public String viewContactUsPage() {
         return "contactus";
     }
 
-
     @RequestMapping("/new_account")
-    public String viewCreateAccountPage(Model model){
+    public String viewCreateAccountPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "create_account";
@@ -55,25 +53,24 @@ public class UserController {
 
     @RequestMapping(value = "/account_registration", method = RequestMethod.POST)
     public String saveUser(@Valid @ModelAttribute("user") User user, Model model) {
-try {
+        try {
 
-    if (service.appUserEmailExists(user.getEmail())) {
+            if (service.appUserEmailExists(user.getEmail())) {
 
-        model.addAttribute("message","Email "+user.getEmail()+" is Already Taken!");
-        return "create_account";
+                model.addAttribute("message", "Email " + user.getEmail() + " is Already Taken!");
+                return "create_account";
 
-    } else
-        user.setRoles("ROLE_USER");
-    user.setPassword(bCryptPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
+            } else
+                user.setRoles("ROLE_USER");
+            user.setPassword(bCryptPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
 
-    user.setActive(true);
-    service.save(user);
+            user.setActive(true);
+            service.save(user);
 
-            }   catch (Exception e) {
+        } catch (Exception e) {
             model.addAttribute("message", e.getMessage());
-        } return "success";
-
-
+        }
+        return "success";
 
     }
 }

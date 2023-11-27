@@ -26,12 +26,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
         .authorizeRequests()
         .antMatchers("/login", "/register").permitAll()
-        .antMatchers("/uploads/**","/ubudehe/**", "/users/**").authenticated()
+        .antMatchers("/uploads/**","/budded/**", "/users/**").authenticated()
         .antMatchers("/api/**").hasAnyRole("ROLE_USER", "ADMIN")
         .and()
         .formLogin()
         .loginPage("/login")
-        .defaultSuccessUrl("/ubudehe/list")
+        .defaultSuccessUrl("/budded/list")
         .failureUrl("/login-error")
         .and()
         .exceptionHandling().accessDeniedPage("/accessDenied");

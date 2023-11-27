@@ -36,7 +36,7 @@
         Citizens Page
       </h1>
 
-      <a style="margin-left:30px" class="btn btn-danger" href="/ubudehe/add">Add new</a>
+      <a style="margin-left:30px" class="btn btn-danger" href="/budded/add">Add new</a>
     </div>
 
     <div id="page-inner">
@@ -66,6 +66,7 @@
                       <th>Gender</th>
                       <th>Phone</th>
                       <th>Address</th>
+                      <th>Email</th>
                       <th>Date of Birth</th>
                       <th>Martial Status</th>
                       <th>Category</th>
@@ -74,18 +75,19 @@
                     </thead>
                     <tbody>
 
-                    <tr th:each="ubudehe : ${viewCitizens}" class="odd gradeX">
-                      <td th:text="${ubudehe.firstName} +' '+ ${ubudehe.lastName}" ></td>
-                      <td th:text="${ubudehe.gender}"></td>
-                      <td th:text="${ubudehe.phone}"></td>
-                      <td th:text="${ubudehe.address}"></td>
-                      <td th:text="${ubudehe.dob}"></td>
-                      <td th:text="${ubudehe.martialStatus}"></td>
-                      <td th:text="${ubudehe.category}"></td>
-                      <td><a th:href="@{/ubudehe/edit/{id}(id=${ubudehe.id})}" class="btn btn-primary">
+                    <tr th:each="citizen : ${viewCitizens}" class="odd gradeX">
+                      <td th:text="${citizen.firstName} +' '+ ${citizen.lastName}" ></td>
+                      <td th:text="${citizen.gender}"></td>
+                      <td th:text="${citizen.phone}"></td>
+                      <td th:text="${citizen.address}"></td>
+                      <td th:text="${citizen.email}"></td>
+                      <td th:text="${citizen.dob}"></td>
+                      <td th:text="${citizen.martialStatus}"></td>
+                      <td th:text="${citizen.category}"></td>
+                      <td><a th:href="@{/budded/edit/{id}(id=${citizen.id})}" class="btn btn-primary">
                         Edit
                       </a>
-                        <a th:href="@{'/ubudehe/delete/' + ${ubudehe.id}}"
+                        <a th:href="@{'/budded/delete/' + ${citizen.id}}"
                            class="btn btn-danger btn-delete">Delete</a>
                         <a href="/uploads/files/new"
                            class="btn btn-warning btn-delete">File Upload</a>

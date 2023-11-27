@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/ubudehe/")
+@RequestMapping("/budded")
 public class UbudeheController {
      @Autowired
     private EmailSenderServiceConfig sendEmail;
@@ -32,24 +32,24 @@ public class UbudeheController {
         this.repo = repo;
     }
 
-    @GetMapping("add")
+    @GetMapping("/add")
     public String showRegisterForm(Ubudehe ubudehe) {
-        return "./dashboard/add-citizen";
+        return "/Dashboard/add-citizen";
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public String showList(Model model) {
         model.addAttribute("viewCitizens", repo.findAll());
-        return "./dashboard/viewCitizens";
+        return "/Dashboard/viewCitizens";
     }
 
-    @PostMapping("register")
-    public String addUbudehe(@Valid Ubudehe ubudehe, BindingResult result, Model model, RedirectAttributes redirectAttributes, Principal principal, @AuthenticationPrincipal User user) {
+    @PostMapping("/register")
+    public String addCitizen(@Valid Ubudehe ubudehe, BindingResult result, Model model, RedirectAttributes redirectAttributes, Principal principal, @AuthenticationPrincipal User user) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         try {
             if (result.hasErrors()) {
-                return "./dashboard/add-citizen";
+                return "./Dashboard/add-citizen";
             }
 
             repo.save(ubudehe);
@@ -64,22 +64,22 @@ public class UbudeheController {
         return "redirect:list";
     }
 
-    @GetMapping("edit/{id}")
+    @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Ubudehe ubudehe = repo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Id:" + id));
-        model.addAttribute("ubudehe", ubudehe);
-        return "./dashboard/edit-citizen";
+        model.addAttribute("budded", ubudehe);
+        return "/Dashboard/edit-citizen";
     }
 
-    @PostMapping("update/{id}")
-    public String updateUbudehe(@PathVariable("id") long id, @Valid Ubudehe ubudehe, BindingResult result,
+    @PostMapping("/update/{id}")
+    public String updateCitizen(@PathVariable("id") long id, @Valid Ubudehe ubudehe, BindingResult result,
                                  Model model, RedirectAttributes redirectAttributes, Principal principal) {
 
         try {
             if (result.hasErrors()) {
                 ubudehe.setId(id);
-                return "./dashboard/edit-citizen";
+                return "/Dashboard/edit-citizen";
             }
             repo.save(ubudehe);
             sendEmail.sendCitizenEmail(ubudehe.getAddress(),"Citizen Category Change",ubudehe.getFirstName()+" "+ubudehe.getLastName(),ubudehe.getCategory());
@@ -93,8 +93,8 @@ public class UbudeheController {
         return "redirect:../list";
     }
 
-    @GetMapping("delete/{id}")
-    public String deleteUbudehe(@PathVariable("id") long id, Model model, RedirectAttributes redirectAttributes) {
+    @GetMapping("/delete/{id}")
+    public String deleteCitizen(@PathVariable("id") long id, Model model, RedirectAttributes redirectAttributes) {
 
         try {
             Ubudehe ubudehe = repo.findById(id)
