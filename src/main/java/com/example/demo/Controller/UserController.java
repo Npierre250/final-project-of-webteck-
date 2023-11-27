@@ -26,7 +26,7 @@ public class UserController {
     private UserRepository repo;
     @RequestMapping("/")
     public String viewHomePage(){
-        return "index.html";
+        return "index";
     }
 
     @RequestMapping("/login_page")
