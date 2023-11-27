@@ -3,7 +3,7 @@ COPY pom.xml .
 RUN mvn dependency:go-offline
 
 COPY src src
-COPY uploads .
+COPY uploads uploads.
 RUN mvn clean package  -Dskiptests
 
 FROM openjdk:8-jre-slim-stretch
